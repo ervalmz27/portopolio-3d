@@ -1,0 +1,203 @@
+@import "tailwindcss";
+
+/* ─── CSS custom properties ──────────────────────────────── */
+@layer base {
+  :root {
+    --void:        #020210;
+    --abyss:       #04061a;
+    --midnight:    #07082e;
+    --twilight:    #12004a;
+
+    --gold:        #d4af37;
+    --gold-light:  #f5d060;
+    --gold-dim:    #8a6a10;
+    --silver:      #b8c4d8;
+    --crystal:     #6dd5fa;
+    --rune:        #8866ff;
+    --aurora-g:    #00ff88;
+    --aurora-b:    #00cfff;
+    --aurora-p:    #c060ff;
+    --flame:       #3366ff;
+    --emerald:     #00d97e;
+    --rose:        #ff4060;
+
+    --font-fantasy: 'Cinzel', 'Times New Roman', serif;
+    --font-deco:    'Cinzel Decorative', serif;
+    --font-body:    'Inter', system-ui, sans-serif;
+    --font-alt:     'Raleway', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html {
+    background: var(--void);
+    color: var(--silver);
+    font-family: var(--font-body);
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body { background: var(--void); overflow-x: hidden; }
+
+  /* Cursor – hidden in favour of custom canvas cursor */
+  * { cursor: none !important; }
+
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--void); }
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(var(--rune), var(--crystal));
+    border-radius: 4px;
+  }
+
+  ::selection { background: rgba(136, 102, 255, 0.35); color: #fff; }
+}
+
+/* ─── Utility layer ──────────────────────────────────────── */
+@layer utilities {
+
+  /* Typography */
+  .font-fantasy  { font-family: var(--font-fantasy); }
+  .font-deco     { font-family: var(--font-deco); }
+  .font-alt      { font-family: var(--font-alt); }
+
+  /* Gradient text helpers */
+  .text-gold {
+    background: linear-gradient(135deg, var(--gold-light), var(--gold), var(--gold-dim));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+  .text-aurora {
+    background: linear-gradient(135deg, var(--aurora-g), var(--aurora-b), var(--aurora-p));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+  .text-crystal {
+    background: linear-gradient(135deg, var(--crystal), var(--rune));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+  .text-flame {
+    background: linear-gradient(135deg, #60aaff, var(--flame), #8844ff);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+
+  /* Glass morphism */
+  .glass {
+    background: rgba(4, 6, 26, 0.55);
+    border: 1px solid rgba(212, 175, 55, 0.14);
+    backdrop-filter: blur(18px) saturate(1.4);
+    -webkit-backdrop-filter: blur(18px) saturate(1.4);
+  }
+  .glass-light {
+    background: rgba(8, 8, 40, 0.40);
+    border: 1px solid rgba(109, 213, 250, 0.12);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+
+  /* Glow helpers */
+  .glow-gold   { box-shadow: 0 0 24px rgba(212,175,55,0.4), 0 0 60px rgba(212,175,55,0.15); }
+  .glow-rune   { box-shadow: 0 0 24px rgba(136,102,255,0.45), 0 0 60px rgba(136,102,255,0.15); }
+  .glow-crystal{ box-shadow: 0 0 24px rgba(109,213,250,0.4), 0 0 60px rgba(109,213,250,0.12); }
+  .glow-aurora { box-shadow: 0 0 30px rgba(0,255,136,0.3), 0 0 80px rgba(0,207,255,0.15); }
+
+  /* Section layout */
+  .section-container {
+    max-width: 1240px;
+    margin-inline: auto;
+    padding-inline: 1.5rem;
+    position: relative;
+    z-index: 10;
+  }
+
+  /* Rune text decoration */
+  .rune-underline {
+    position: relative;
+    display: inline-block;
+  }
+  .rune-underline::after {
+    content: '';
+    position: absolute;
+    bottom: -4px; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+
+  /* Animated border */
+  .magic-border {
+    position: relative;
+  }
+  .magic-border::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, var(--gold), var(--rune), var(--crystal), var(--gold));
+    background-size: 300% 300%;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    animation: borderRotate 4s linear infinite;
+  }
+  @keyframes borderRotate {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  /* Particle float */
+  .float-particle {
+    animation: floatUp 3s ease-in-out infinite;
+  }
+  @keyframes floatUp {
+    0%,100% { transform: translateY(0) rotate(0deg); opacity: 0.6; }
+    50%      { transform: translateY(-12px) rotate(10deg); opacity: 1; }
+  }
+
+  /* Rune spin */
+  .spin-slow { animation: spin 20s linear infinite; }
+  .spin-reverse { animation: spin 14s linear infinite reverse; }
+  @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+  /* Shimmer */
+  .shimmer {
+    background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.06) 50%, transparent 100%);
+    background-size: 200% 100%;
+    animation: shimmer 3s ease infinite;
+  }
+  @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+
+  /* Pulse glow */
+  .pulse-gold {
+    animation: pulseGold 2.5s ease-in-out infinite;
+  }
+  @keyframes pulseGold {
+    0%,100% { box-shadow: 0 0 15px rgba(212,175,55,0.3); }
+    50%     { box-shadow: 0 0 40px rgba(212,175,55,0.6), 0 0 80px rgba(212,175,55,0.2); }
+  }
+
+  /* Section separators */
+  .rune-divider {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 0 auto;
+    max-width: 400px;
+  }
+  .rune-divider::before,
+  .rune-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(212,175,55,0.4), transparent);
+  }
+}
+
+/* ─── Global canvas ──────────────────────────────────────── */
+canvas { display: block; }
+
+/* ─── Section base ───────────────────────────────────────── */
+.fantasy-section {
+  position: relative;
+  overflow: hidden;
+  padding: 8rem 1.5rem;
+}
