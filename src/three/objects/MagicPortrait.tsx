@@ -1,6 +1,6 @@
-import { useMemo, useRef } from 'react'
+import { useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
-import { Float } from '@react-three/drei'
+import { Float, useTexture } from '@react-three/drei'
 import * as THREE from 'three'
 
 /* Animated rune ring orbiting the portrait */
@@ -97,68 +97,7 @@ function PortraitFrame() {
     }
   })
 
-  /* Canvas texture: magical placeholder portrait */
-  const portraitTexture = useMemo(() => {
-    const size = 512
-    const canvas = document.createElement('canvas')
-    canvas.width = canvas.height = size
-    const ctx = canvas.getContext('2d')!
-
-    /* Deep background */
-    const bg = ctx.createRadialGradient(256, 256, 20, 256, 320, 280)
-    bg.addColorStop(0, '#1a0060')
-    bg.addColorStop(0.5, '#0a0030')
-    bg.addColorStop(1, '#000015')
-    ctx.fillStyle = bg
-    ctx.fillRect(0, 0, size, size)
-
-    /* Arcane rings */
-    const ringColors = ['rgba(136,102,255,0.5)', 'rgba(109,213,250,0.4)', 'rgba(212,175,55,0.3)']
-    ;[80, 130, 170].forEach((r, i) => {
-      ctx.strokeStyle = ringColors[i]
-      ctx.lineWidth = 1.5
-      ctx.setLineDash([6, 4])
-      ctx.beginPath()
-      ctx.arc(256, 280, r, 0, Math.PI * 2)
-      ctx.stroke()
-    })
-    ctx.setLineDash([])
-
-    /* Silhouette aura glow */
-    const aura = ctx.createRadialGradient(256, 230, 0, 256, 230, 120)
-    aura.addColorStop(0, 'rgba(136,102,255,0.35)')
-    aura.addColorStop(0.6, 'rgba(0,212,255,0.12)')
-    aura.addColorStop(1, 'transparent')
-    ctx.fillStyle = aura
-    ctx.fillRect(0, 0, size, size)
-
-    /* Character silhouette */
-    ctx.fillStyle = 'rgba(180,160,255,0.6)'
-    // head
-    ctx.beginPath(); ctx.arc(256, 160, 55, 0, Math.PI * 2); ctx.fill()
-    // body
-    ctx.beginPath()
-    ctx.moveTo(185, 230); ctx.quadraticCurveTo(256, 215, 327, 230)
-    ctx.lineTo(340, 420); ctx.quadraticCurveTo(256, 440, 172, 420)
-    ctx.closePath(); ctx.fill()
-
-    /* Magic rune text */
-    ctx.fillStyle = '#d4af37'
-    ctx.font = 'bold 28px serif'
-    ctx.textAlign = 'center'
-    ctx.fillText('ᚠ ᚢ ᚦ ᚩ ᚱ ᚳ', 256, 480)
-
-    /* Sparkle dots */
-    for (let i = 0; i < 40; i++) {
-      const sx = Math.random() * size
-      const sy = Math.random() * size
-      const sr = Math.random() * 2 + 0.5
-      ctx.fillStyle = `rgba(255,255,255,${Math.random() * 0.8 + 0.2})`
-      ctx.beginPath(); ctx.arc(sx, sy, sr, 0, Math.PI * 2); ctx.fill()
-    }
-
-    return new THREE.CanvasTexture(canvas)
-  }, [])
+  const portraitTexture = useTexture('/portrait.jpg')
 
   return (
     <group position={[0, 1.6, 0]}>
