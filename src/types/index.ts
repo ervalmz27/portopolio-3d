@@ -11,6 +11,7 @@ export interface Project {
   github: string
   demo: string
   category: string
+  image?: string
 }
 
 export interface Skill {

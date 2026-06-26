@@ -62,7 +62,16 @@ function PortalCard({ project, index }: { project: Project; index: number }) {
         className="relative h-48 flex items-center justify-center overflow-hidden"
         style={{ background: `radial-gradient(ellipse at center, ${project.color}18, ${project.color}08)` }}
       >
-        {patterns[index % patterns.length]}
+        {project.image ? (
+          <img
+            src={project.image}
+            alt={project.title}
+            className="w-full h-full object-cover object-top"
+            style={{ filter: hovered ? 'none' : 'brightness(0.85) saturate(0.9)' }}
+          />
+        ) : (
+          patterns[index % patterns.length]
+        )}
 
         {/* Category badge */}
         <div className="absolute top-3 left-3 flex items-center gap-1.5 glass px-3 py-1 rounded-full">
