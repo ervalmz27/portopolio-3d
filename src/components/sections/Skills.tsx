@@ -130,10 +130,20 @@ function SkillBar({ name, level, color, icon, delay }: (typeof SKILLS)[0] & { de
   )
 }
 
-const CATEGORIES = ['Frontend', '3D & Graphics', 'Backend']
-const CAT_COLORS = { Frontend: '#6dd5fa', '3D & Graphics': '#8866ff', Backend: '#00d97e' }
-const CAT_RUNES  = { Frontend: 'ᚠ', '3D & Graphics': 'ᚦ', Backend: 'ᚩ' }
-const TOOLS      = ['VS Code','Git','Figma','Postman','Vercel','AWS','Docker','Prisma','Jest','Turborepo']
+const CATEGORIES = ['Backend', 'Frontend', 'Mobile', 'Security & OSINT']
+const CAT_COLORS: Record<string, string> = {
+  Backend: '#00d97e',
+  Frontend: '#6dd5fa',
+  Mobile: '#d4af37',
+  'Security & OSINT': '#ff4060',
+}
+const CAT_RUNES: Record<string, string> = {
+  Backend: 'ᚩ',
+  Frontend: 'ᚠ',
+  Mobile: 'ᚱ',
+  'Security & OSINT': 'ᚦ',
+}
+const TOOLS = ['VS Code','Git','Docker','Composer','Swagger','Postman','MobSF','OpenVPN','Firebase','Gii/GiiAnt','Figma','Vercel']
 
 export default function Skills() {
   const ref   = useRef<HTMLElement>(null)
@@ -176,8 +186,8 @@ export default function Skills() {
           <div className="space-y-6">
             {CATEGORIES.map((cat, ci) => {
               const catSkills = SKILLS.filter(s => s.category === cat)
-              const color = CAT_COLORS[cat as keyof typeof CAT_COLORS]
-              const rune  = CAT_RUNES[cat as keyof typeof CAT_RUNES]
+              const color = CAT_COLORS[cat]
+              const rune  = CAT_RUNES[cat]
               return (
                 <motion.div
                   key={cat}

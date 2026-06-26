@@ -205,10 +205,10 @@ export default function Hero() {
             className="hidden xl:grid grid-cols-2 gap-4 w-72"
           >
             {[
-              { v: '3+',  l: 'Years of Craft',  c: '#d4af37', r: 'ᚠ' },
-              { v: '50+', l: 'Realms Built',     c: '#8866ff', r: 'ᚩ' },
-              { v: '20+', l: 'Souls Delighted',  c: '#00d4ff', r: 'ᚱ' },
-              { v: '∞',   l: 'Curiosity',        c: '#00ff88', r: 'ᛟ' },
+              { v: '5+',  l: 'Years of Craft',    c: '#d4af37', r: 'ᚠ' },
+              { v: '20+', l: 'Realms Forged',      c: '#8866ff', r: 'ᚩ' },
+              { v: '8+',  l: 'Companies Served',   c: '#00d4ff', r: 'ᚱ' },
+              { v: '∞',   l: 'Curiosity',          c: '#00ff88', r: 'ᛟ' },
             ].map(({ v, l, c, r }) => (
               <motion.div
                 key={l}
