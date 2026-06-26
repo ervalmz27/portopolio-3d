@@ -1,6 +1,6 @@
-import { useRef } from 'react'
+import { useRef, useMemo, useEffect, useState } from 'react'
 import { useFrame } from '@react-three/fiber'
-import { Float, useTexture } from '@react-three/drei'
+import { Float } from '@react-three/drei'
 import * as THREE from 'three'
 
 /* Animated rune ring orbiting the portrait */
@@ -97,7 +97,37 @@ function PortraitFrame() {
     }
   })
 
-  const portraitTexture = useTexture('/portrait.jpg')
+  /* Canvas placeholder — shown until portrait.jpg loads */
+  const canvasTexture = useMemo(() => {
+    const size = 512
+    const canvas = document.createElement('canvas')
+    canvas.width = canvas.height = size
+    const ctx = canvas.getContext('2d')!
+    const bg = ctx.createRadialGradient(256, 256, 20, 256, 320, 280)
+    bg.addColorStop(0, '#1a0060'); bg.addColorStop(0.5, '#0a0030'); bg.addColorStop(1, '#000015')
+    ctx.fillStyle = bg; ctx.fillRect(0, 0, size, size)
+    const aura = ctx.createRadialGradient(256, 230, 0, 256, 230, 120)
+    aura.addColorStop(0, 'rgba(136,102,255,0.35)'); aura.addColorStop(1, 'transparent')
+    ctx.fillStyle = aura; ctx.fillRect(0, 0, size, size)
+    ctx.fillStyle = 'rgba(180,160,255,0.6)'
+    ctx.beginPath(); ctx.arc(256, 160, 55, 0, Math.PI * 2); ctx.fill()
+    ctx.beginPath(); ctx.moveTo(185, 230); ctx.quadraticCurveTo(256, 215, 327, 230)
+    ctx.lineTo(340, 420); ctx.quadraticCurveTo(256, 440, 172, 420); ctx.closePath(); ctx.fill()
+    ctx.fillStyle = '#d4af37'; ctx.font = 'bold 28px serif'
+    ctx.textAlign = 'center'; ctx.fillText('ᚠ ᚢ ᚦ ᚩ ᚱ ᚳ', 256, 480)
+    return new THREE.CanvasTexture(canvas)
+  }, [])
+
+  /* Try to load real portrait.jpg — silently falls back if missing */
+  const [portraitTexture, setPortraitTexture] = useState<THREE.Texture>(canvasTexture)
+  useEffect(() => {
+    new THREE.TextureLoader().load(
+      '/projects/profile.png',
+      (tex) => setPortraitTexture(tex),
+      undefined,
+      () => { /* file not found — keep canvas texture */ }
+    )
+  }, [])
 
   return (
     <group position={[0, 1.6, 0]}>

@@ -72,7 +72,7 @@ export const PROJECTS: Project[] = [
     github: '#',
     demo: '#',
     category: 'security',
-    image: '/projects/prismkey.png',
+    image: '/projects/screenshot-prismkey.jpeg',
   },
   {
     id: 2,
@@ -85,7 +85,7 @@ export const PROJECTS: Project[] = [
     github: '#',
     demo: '#',
     category: 'government',
-    image: '/projects/iknow.png',
+    image: '/projects/screenshot-ikn.jpeg',
   },
   {
     id: 3,
@@ -98,7 +98,7 @@ export const PROJECTS: Project[] = [
     github: '#',
     demo: '#',
     category: 'enterprise',
-    image: '/projects/bsi.png',
+    image: '/projects/screenshot-bsi.jpeg',
   },
   {
     id: 4,
@@ -111,7 +111,7 @@ export const PROJECTS: Project[] = [
     github: '#',
     demo: '#',
     category: 'platform',
-    image: '/projects/telkom.png',
+    image: '/projects/screenshot-digicon.jpeg',
   },
   {
     id: 5,
@@ -124,7 +124,7 @@ export const PROJECTS: Project[] = [
     github: '#',
     demo: '#',
     category: 'enterprise',
-    image: '/projects/sequistower.png',
+    image: '/projects/screenshot-squizetower.jpeg',
   },
   {
     id: 6,
@@ -137,7 +137,7 @@ export const PROJECTS: Project[] = [
     github: '#',
     demo: '#',
     category: 'saas',
-    image: '/projects/rumahyatim.png',
+    image: '/projects/screenshot-bigamalsaas.jpeg',
   },
   {
     id: 7,
@@ -150,7 +150,7 @@ export const PROJECTS: Project[] = [
     github: '#',
     demo: '#',
     category: 'platform',
-    image: '/projects/aikon.png',
+    image: '/projects/screenshot-aikonlaundry- web.jpeg',
   },
 ]
 

@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useRef, useState, useCallback } from 'react'
 import { motion, useInView, AnimatePresence } from 'framer-motion'
 import SectionTitle from '../SectionTitle'
 import { PROJECTS } from '../../data/portfolio'
@@ -12,6 +12,8 @@ function PortalCard({ project, index }: { project: Project; index: number }) {
   const ref    = useRef<HTMLDivElement>(null)
   const inView = useInView(ref, { once: true })
   const [hovered, setHovered] = useState(false)
+  const [imgError, setImgError] = useState(false)
+  const handleImgError = useCallback(() => setImgError(true), [])
 
   /* Decorative SVG portal pattern */
   const patterns = [
@@ -62,12 +64,13 @@ function PortalCard({ project, index }: { project: Project; index: number }) {
         className="relative h-48 flex items-center justify-center overflow-hidden"
         style={{ background: `radial-gradient(ellipse at center, ${project.color}18, ${project.color}08)` }}
       >
-        {project.image ? (
+        {project.image && !imgError ? (
           <img
             src={project.image}
             alt={project.title}
             className="w-full h-full object-cover object-top"
-            style={{ filter: hovered ? 'none' : 'brightness(0.85) saturate(0.9)' }}
+            style={{ filter: hovered ? 'none' : 'brightness(0.82) saturate(0.88)' }}
+            onError={handleImgError}
           />
         ) : (
           patterns[index % patterns.length]
